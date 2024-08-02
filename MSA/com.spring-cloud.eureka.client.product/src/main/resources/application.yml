@@ -4,15 +4,14 @@ spring:
   profiles:
     active: local
   config:
-    import: "configserver:"
+    import: "optional:configserver:"
   cloud:
     config:
       discovery:
-        enabled: true
-        service-id: config-server
+        enabled: false
 
 server:
-  port: 0
+  port: 19092
 
 eureka:
   client:
@@ -24,5 +23,13 @@ management:
     web:
       exposure:
         include: refresh
+  zipkin:
+    tracing:
+      endpoint: "http://localhost:9411/api/v2/spans"
+  tracing:
+    sampling:
+      probability: 1.0
 
 message: "default message"
+
+
