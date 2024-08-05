@@ -1,0 +1,105 @@
+-- String
+-- 명령어 <key> ~~
+SET user:email alex@example.com
+GET user:email
+
+SET user:count 1
+INCR user:count
+DECR user:count
+
+MSET user:name alex user:email alex@example.com
+MGET user:name user:email
+-- 문자열 -> ByteArr -> 이미지, 음성, HTML 등 다양한 파일 처리 가(512MB)
+
+
+-- List : LinkedList -> stack, queue 로 활용
+LPUSH user:list alex
+LPUSH user:list brad
+RPUSH user:list chad
+RPUSH user:list dave
+-- 자료형 다르면 오류
+GET user:list
+LPOP user:list
+RPOP user:list
+-- list size
+LLEN user:list
+-- 크기보다 더 큰 숫자
+LRANGE user:list 0 1000000
+-- 음수 인덱스
+LRANGE user:list 0 -1
+-- end < start -> empty
+LRANGE user:list 1 0
+-- WorkerQueue, Sns TimeLine 기능
+
+
+-- Set
+SADD user:java alex
+SADD user:java brad
+SADD user:java chad
+SREM user:java alex
+SMEMBERS user:java
+-- in
+SISMEMBER user:java brad
+SISMEMBER user:java dave
+-- set size
+SCARD user:java
+-- 교집합 합집합
+SADD user:python alex
+SADD user:python dave
+SADD user:java alex
+SINTER user:java user:python
+SUNION  user:java user:python
+SINTERCARD 2 user:python user:java
+-- 중복 허용 않는 방문자 수 세기 -> URL을 키로 하고 사용자 ID를 널어준.
+-- 인증 토큰 블랙리스트
+
+
+-- Hash
+-- hashCode -- Field - Value pair
+HSET user:alex name alex age 25
+HSET user:alex major CSE
+
+HGET user:alex name
+HGET user:alex age
+HMGET user:alex age major
+HGETALL user:alex
+HKEYS user:alex
+HLEN user:alex
+-- 장바구니, 세션 정보
+HSET cart:alex computer 1 mouse 2 keyboard 10
+-- 하나의 객체에 대한 정보만 넣기
+
+
+-- SortedSet : 중복되지 않는 데이터 + 점수(우선순위)
+-- ZADD key score value
+ZADD user:ranks 10 alex
+ZADD user:ranks 9 brad 11 chad
+ZADD user:ranks 8 dave
+ZADD user:ranks 9.5 eric
+
+ZINCRBY user:ranks 2 alex
+
+ZRANK user:ranks alex
+ZRANGE user:ranks 0 3
+ZREVRANK user:ranks alex
+ZREVRANGE user:ranks 0 3
+-- 리더보(순위표), RateLimiter(과도한 요청 거부)
+
+
+--기타
+SET somekey "to be deleted"
+DEL somekey
+
+SET expirekey "to be expired"
+EXPIRE expirekey 5
+EXPIRETIME expirekey
+
+KEYS user:*
+-- 패턴
+-- h?llo - hello, hallo, hxllo
+-- h*llo - hllo, heeeello
+-- h[ae]llo - hello, hallo (not hillo)
+-- h[^e]llo - hallo, hbllo, ... (not hello)
+-- h[a-b]llo - hallo, hbllo
+
+FLUSHDB
