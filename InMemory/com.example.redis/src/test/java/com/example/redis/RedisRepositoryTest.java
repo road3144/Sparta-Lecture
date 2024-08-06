@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.redis.repo.Item;
+import com.example.redis.repo.ItemRepository;
+
 @SpringBootTest
 public class RedisRepositoryTest {
 

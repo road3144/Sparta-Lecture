@@ -1,4 +1,4 @@
-package com.example.redis;
+package com.example.redis.repo;
 
 import org.springframework.data.repository.CrudRepository;
 
