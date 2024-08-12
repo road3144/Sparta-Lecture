@@ -1,0 +1,25 @@
+package com.market.order;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+
+	@Value("${message.queue.product}")
+	private String productQueue;
+
+	@Value("${message.queue.payment}")
+	private String paymentQueue;
+
+	private final RabbitTemplate rabbitTemplate;
+
+	public void createOrder(String id) {
+		rabbitTemplate.convertAndSend(productQueue, id);
+		rabbitTemplate.convertAndSend(paymentQueue, id);
+	}
+}
